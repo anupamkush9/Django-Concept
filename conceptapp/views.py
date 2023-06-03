@@ -26,6 +26,10 @@ def book_list_prefetch_related(request):
     return render(request, 'conceptapp/book_list.html', {'books': books, 'title': 'Books (prefetch_related)'})
 
 def book_list_forloop(request):
+    '''
+    # prefetch related and select related program.
+    # https://www.youtube.com/watch?v=TzgZBg7oXNA     #video link for select related and pre-fetch related program
+    '''
     books = Book.objects.all()
     return render(request, 'conceptapp/author_list.html', {'books': books, 'title': 'Authors (Normal Approach)'})
 
