@@ -1,0 +1,32 @@
+{% extends 'conceptapp/base.html' %}
+
+{% block style %}
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 50px;
+    }
+
+    h1 {
+        color: #2ecc71;
+    }
+
+    p {
+        font-size: 18px;
+        margin-top: 20px;
+    }
+
+    .success-icon {
+        font-size: 80px;
+        color: #2ecc71;
+        margin-bottom: 30px;
+    }
+{% endblock %}
+
+{% block content %}
+
+    <i class="success-icon fa fa-check-circle"></i>
+    <h1>Payment Successful</h1>
+    <p>Thank you for your payment!</p>
+ 
+{% endblock %}

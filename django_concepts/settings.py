@@ -9,19 +9,21 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
-
+from dotenv import dotenv_values
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-qivb%64%ojp&69zy34x=r6sod2^*)vspzn)4ubk&7#+e5*gkd@'
-
+# get variables from .env file
+env_vars = dotenv_values('.env')
+SECRET_KEY = env_vars['SECRET_KEY']
+STRIPE_SECRET_KEY = env_vars['STRIPE_SECRET_KEY']
+STRIPE_PUBLISHABLE_KEY = env_vars['STRIPE_PUBLISHABLE_KEY']
+STRIPE_WEBHOOK_SIGNING_KEY = env_vars['STRIPE_WEBHOOK_SIGNING_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -38,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'conceptapp'
+    'conceptapp',
+    'stripe_integration'
 ]
 
 MIDDLEWARE = [
@@ -123,6 +126,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = '/media_folder/'
+MEDIA_ROOT = os.path.join(BASE_DIR,"media_folder")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
