@@ -6,7 +6,7 @@ services:
     container_name: django_concept_app
     command: python3.8 manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code
+      - .:/code/
     ports:
       - 8000:8000
     restart: always

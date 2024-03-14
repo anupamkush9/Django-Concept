@@ -4,7 +4,12 @@
   <title>My Website</title>
   <!-- Add Bootstrap CSS link here -->
     <!-- Add Bootstrap JavaScript link here -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+    <style>
+      {% block style %}
+      {% endblock %}
+    </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -28,7 +33,10 @@
         </li>        
         <li class="nav-item">
           <a class="nav-link" href="/twodatabases">twodatabases</a>
-        </li>
+        </li>       
+        <li class="nav-item">
+          <a class="nav-link" href="/stripe/checkout_home">checkout_home</a>
+        </li>       
       </ul>
     </div>
   </nav>
