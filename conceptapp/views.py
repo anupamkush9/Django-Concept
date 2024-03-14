@@ -15,6 +15,17 @@ def book_list_select_related(request):
     '''
     1. Reduces the number of database queries by performing inner joins.
     2. Useful for fetching one-to-many relationships or accessing a single related object.
+    3. Select_related uses inner joins for query optimization.
+    4. e.g : 
+        SELECT "conceptapp_book"."id",
+            "conceptapp_book"."title",
+            "conceptapp_book"."author_id",
+            "conceptapp_author"."id",
+            "conceptapp_author"."name",
+            "conceptapp_author"."address"
+        FROM "conceptapp_book"
+        INNER JOIN "conceptapp_author"
+            ON ("conceptapp_book"."author_id" = "conceptapp_author"."id")
     '''
     books = Book.objects.select_related('author').all()
     return render(request, 'conceptapp/book_list.html', {'books': books, 'title': 'Books (select_related)'})
