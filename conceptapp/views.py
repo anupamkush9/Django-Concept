@@ -46,4 +46,9 @@ def book_list_forloop(request):
     books = Book.objects.all()
     return render(request, 'conceptapp/author_list.html', {'books': books, 'title': 'Authors (Normal Approach)'})
 
+def twodatabases(request):
+    # This line is same as writing Book.objects.using('default').all()
+    default_db_books = Book.objects.all()
+    read_db_books = Book.objects.using('read_db').all()
+    return render(request, 'conceptapp/twodatabases.html', {'default_db_books': default_db_books, 'read_db_books': read_db_books})
 

@@ -1,0 +1,20 @@
+{% extends 'conceptapp/base.html' %}
+{% block content %}
+
+    <h1> Two Databases Concept</h1>
+    <hr>
+    <h2> Default Databases</h2>
+    <ul>
+        {% for book in default_db_books %}
+        <li>{{ book.title }} -Written by {{ book.author.name }} and address is {{book.author.address}} </li>
+        {% endfor %}
+    </ul>    
+    <hr>
+    <h2> Read_db Databases</h2>
+    <ul>
+        {% for book in read_db_books %}
+        <li>{{ book.title }} -Written by {{ book.author.name }} and address is {{book.author.address}} </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
