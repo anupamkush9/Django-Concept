@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
     'conceptapp'
 ]
 
@@ -130,6 +129,7 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
+from .local_settings import *
 if DEBUG:
     import socket  # only if you haven't already imported this
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
