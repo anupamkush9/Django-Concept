@@ -7,9 +7,11 @@ from django.http import JsonResponse,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from dotenv import dotenv_values
 from .models import Order, Product
+from dotenv import dotenv_values
+env_vars = dotenv_values('.env')
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
-YOUR_DOMAIN = 'http://127.0.0.1:8000'
+NGROK_LINK = env_vars['NGROK_LINK']
 
 @csrf_exempt
 def create_checkout_session(request, product_id):
@@ -24,8 +26,8 @@ def create_checkout_session(request, product_id):
         'currency': 'inr',
         'product_data': {
                         'name': product.name,
-                        "description":f'{product.description} and image urls is : https://3917-103-97-240-96.ngrok-free.app{product.image.url}',
-                        "images": [f'https://3917-103-97-240-96.ngrok-free.app{product.image.url}'],
+                        "description":f'{product.description} and image urls is : {NGROK_LINK}{product.image.url}',
+                        "images": [f'{NGROK_LINK}{product.image.url}'],
                         },
                     'unit_amount': int(product.price)*100,
                     },
@@ -35,8 +37,8 @@ def create_checkout_session(request, product_id):
         "order_id": order.id,
         },
     mode='payment',
-    success_url=YOUR_DOMAIN + '/stripe/success',
-    cancel_url=YOUR_DOMAIN + '/stripe/cancel',
+    success_url=NGROK_LINK + '/stripe/success',
+    cancel_url=NGROK_LINK + '/stripe/cancel',
     )
     return JsonResponse({'id': session.id})
 

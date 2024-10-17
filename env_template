@@ -3,4 +3,5 @@ SECRET_KEY = "paste here your django key"
 STRIPE_SECRET_KEY = 'Here stripe secret key will come'
 STRIPE_PUBLISHABLE_KEY = 'your publishable key should be there'
 STRIPE_WEBHOOK_SIGNING_KEY = 'webhook signing key which is generated when we create a singing key'
+NGROK_LINK = 'your ngrok url some thing like https://<ipv4_address>.ngrok-free.app'
 
