@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import render
 from .models import Book
-from django.shortcuts import render
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.conf import settings
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.core.mail import send_mail, EmailMultiAlternatives
 
 def index_view(request):
     print("====================")
@@ -76,3 +78,26 @@ def send_mail_view(request):
             context['result'] = 'All fields are required'
     
     return render(request, "conceptapp/email_index.html", context)
+
+
+def send_email_with_static_image_view(request):
+    context = {}
+    if request.method == 'POST':
+        address = request.POST.get('address')
+        current_site = get_current_site(request).domain        
+        abs_url = "http://" + current_site +"/email-verify/" + "random_token_value"
+        context = {"first_name":"first_name","last_name":"last_name","link":abs_url,
+                   "facebook_logo_url" : f"https://static.vecteezy.com/system/resources/previews/018/930/698/non_2x/facebook-logo-facebook-icon-transparent-free-png.png",
+                    "twitter_logo_url" : f"https://img.freepik.com/premium-vector/twitter-new-x-logo-design-vector_1340851-70.jpg",
+                    "instagram_logo_url" : f"https://img.freepik.com/premium-vector/instagram-vector-logo-icon-social-media-logotype_901408-395.jpg",
+                    "my_dummy_logo_url" : f"https://anupamstationery.com/wp-content/uploads/2021/04/Anupam_Logo-400-Width.png",
+                }
+        # returns html file data same to same with html tags.
+        html_message_for_user = render_to_string('conceptapp/verification_email.html', context)
+        #remove html tags and returns just the message
+        plain_message_for_user = strip_tags(html_message_for_user)
+        final_message_for_user = EmailMultiAlternatives('Email Verification', plain_message_for_user, settings.EMAIL_HOST_USER,[address])
+        final_message_for_user.attach_alternative(html_message_for_user, 'text/html')
+        mail_response = final_message_for_user.send()
+    return render(request, "conceptapp/email_index.html", context)
+    # return render(request, "conceptapp/verification_email.html", context)
