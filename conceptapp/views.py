@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Book
+from django.shortcuts import render
+from django.core.mail import send_mail
+from django.conf import settings
 
 def index_view(request):
     print("====================")
@@ -52,3 +55,24 @@ def twodatabases(request):
     read_db_books = Book.objects.using('read_db').all()
     return render(request, 'conceptapp/twodatabases.html', {'default_db_books': default_db_books, 'read_db_books': read_db_books})
 
+
+def send_mail_view(request):
+    """
+    Implementation Ref : https://www.geeksforgeeks.org/setup-sending-email-in-django-project/
+    """
+    context = {}
+    if request.method == 'POST':
+        address = request.POST.get('address')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        if address and subject and message:
+            try:
+                send_mail(subject, message, settings.EMAIL_HOST_USER, [address])
+                context['result'] = 'Email sent successfully'
+            except Exception as e:
+                context['result'] = f'Error sending email: {e}'
+        else:
+            context['result'] = 'All fields are required'
+    
+    return render(request, "conceptapp/email_index.html", context)
